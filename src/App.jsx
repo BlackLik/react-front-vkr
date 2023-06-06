@@ -1,15 +1,18 @@
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import RoutesPage from './pages';
+import Layout from './layout';
 
 const helmetContext = {};
 
 function App() {
   return (
     <BrowserRouter basename='/'>
-      <HelmetProvider context={helmetContext}>
-        <RoutesPage />
-      </HelmetProvider>
+      <Layout>
+        <HelmetProvider context={helmetContext}>
+          <RoutesPage />
+        </HelmetProvider>
+      </Layout>
     </BrowserRouter>
   );
 }

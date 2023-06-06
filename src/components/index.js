@@ -1,5 +1,6 @@
-import { lazy } from 'react';
 import { SEO as Seo } from './SEO';
-const RussianMap = lazy(() => import('./RussianMap'));
+import { RussianMap } from './RussianMap';
+import Gender from './Gender.jsx';
+import FormRecomendation from './FormRecomendation';
 
-export { Seo, RussianMap };
+export { Seo, RussianMap, Gender, FormRecomendation };

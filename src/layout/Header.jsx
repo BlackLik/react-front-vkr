@@ -1,14 +1,15 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
 
 function Header() {
   let region = useSelector((state) => state.region.data.iso);
+  let gender = useSelector((state) => state.gender.data.name_gender);
 
-  region = region ? "Регион " + region : 'Выбрать регион';
+  region = region ? 'Регион ' + region : 'Выбрать регион';
+  gender = gender ? 'Пол: ' + gender : 'Выбрать пол';
 
   return (
     <header>
@@ -23,20 +24,23 @@ function Header() {
               <LinkContainer to='/region'>
                 <Nav.Link>{region}</Nav.Link>
               </LinkContainer>
-              <Nav.Link href='#link'>Link</Nav.Link>
-              <NavDropdown title='Dropdown' id='basic-nav-dropdown'>
-                <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-                <NavDropdown.Item href='#action/3.2'>
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href='#action/3.3'>
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href='#action/3.4'>
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
+              <LinkContainer to='/gender'>
+                <Nav.Link>{gender}</Nav.Link>
+              </LinkContainer>
+            </Nav>
+            <Nav>
+              <Nav.Link
+                href='https://github.com/BlackLik/react-front-vkr'
+                target='_blank'
+              >
+                Репозиторий frontend
+              </Nav.Link>
+              <Nav.Link
+                href='https://github.com/BlackLik/flask-rest-vkr'
+                target='_blank'
+              >
+                Репозиторий backend
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

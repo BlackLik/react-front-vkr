@@ -1,13 +1,13 @@
-import { RussianMap, Seo } from '../components';
-import Layout from '../layout';
+// import { lazy, Suspense } from 'react';
+import { Seo, RussianMap } from '../components';
 
 function RegionPage() {
   return (
-    <Layout>
+    <>
       <Seo title='Region Page' />
       <h1>Region Page</h1>
       <RussianMap />
-    </Layout>
+    </>
   );
 }
 
