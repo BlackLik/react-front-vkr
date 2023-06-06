@@ -21,10 +21,7 @@ function Home() {
       <Seo title='Home' />
       <h1>Home</h1>
 
-      <Accordion
-        defaultActiveKey={paramsPredict.citizenship ? '' : '0'}
-        alwaysOpen={!paramsPredict.citizenship}
-      >
+      <Accordion defaultActiveKey={paramsPredict.citizenship ? '' : '0'}>
         <Accordion.Item eventKey='0'>
           <Accordion.Header>
             <h2>Фильтр</h2>

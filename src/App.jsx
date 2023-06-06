@@ -2,7 +2,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import RoutesPage from './pages';
 import Layout from './layout';
-
 const helmetContext = {};
 
 function App() {
