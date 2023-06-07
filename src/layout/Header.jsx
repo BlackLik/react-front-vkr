@@ -33,13 +33,13 @@ function Header() {
                 href='https://github.com/BlackLik/react-front-vkr'
                 target='_blank'
               >
-                Репозиторий frontend
+                GitHub React
               </Nav.Link>
               <Nav.Link
                 href='https://github.com/BlackLik/flask-rest-vkr'
                 target='_blank'
               >
-                Репозиторий backend
+                Github Flask
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

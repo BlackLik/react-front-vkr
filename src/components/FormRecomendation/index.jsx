@@ -1,20 +1,35 @@
-import { Form, ProgressBar, Button, Row, Col } from 'react-bootstrap';
+import {
+  Form,
+  ProgressBar,
+  Button,
+  Row,
+  Col,
+  ButtonGroup,
+  Container,
+} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { getIp, getApiData } from '../../axios';
 import FormGroup from './FormGroup';
 import { useDispatch, useSelector } from 'react-redux';
-import { setParamsToPredict } from '../../redux/ParamsToPredictSlice';
+import {
+  setParamsToPredict,
+  setUpdate,
+} from '../../redux/ParamsToPredictSlice';
+import { LinkContainer } from 'react-router-bootstrap';
 
 function FormRecomendation() {
   const dispatch = useDispatch();
 
   const last_form = useSelector((state) => state.paramsPredict.data);
+  const gender = useSelector((state) => state.gender.data.id);
+  const region = useSelector((state) => state.region.data.id);
 
   const [ip, setIp] = useState(null);
   const [citizenships, setCitizenships] = useState([]);
   const [professionCodes, setProfessionCodes] = useState([]);
   const [formOfEducations, setFormOfEducations] = useState([]);
-  const [loading, setLoading] = useState([true, true, true]);
+  const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState([]);
 
   const [rangeEducation, setRangeEducation] = useState(48);
   const [rangeDisability, setRangeDisability] = useState(0);
@@ -24,17 +39,25 @@ function FormRecomendation() {
       setIp(response);
     });
 
-    getApiData('citizenships').then((response) => {
-      setCitizenships(response.citizenships);
-    });
+    const need_fetch = JSON.parse(localStorage.getItem('saveApi'));
+    const now_time = new Date().getTime();
 
-    getApiData('profession_codes').then((response) => {
-      setProfessionCodes(response.profession_codes);
-    });
+    if (!need_fetch || now_time - need_fetch.datetime > 1000 * 60 * 60) {
+      getApiData('citizenships').then((response) => {
+        setCitizenships(response.citizenships);
+        setProgress((prev) => [...prev, true]);
+      });
 
-    getApiData('form_of_educations').then((response) => {
-      setFormOfEducations(response.form_of_educations);
-    });
+      getApiData('profession_codes').then((response) => {
+        setProfessionCodes(response.profession_codes);
+        setProgress((prev) => [...prev, true]);
+      });
+
+      getApiData('form_of_educations').then((response) => {
+        setFormOfEducations(response.form_of_educations);
+        setProgress((prev) => [...prev, true]);
+      });
+    }
 
     if (last_form.duration_of_education !== null) {
       setRangeEducation(last_form.duration_of_education);
@@ -46,6 +69,27 @@ function FormRecomendation() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ip]);
+
+  useEffect(() => {
+    const need_fetch = JSON.parse(localStorage.getItem('saveApi'));
+    const now_time = new Date().getTime();
+
+    if (!need_fetch) {
+      if (progress.length >= 3) {
+        let new_saveApi = {
+          form_of_educations: formOfEducations,
+          citizenships: citizenships,
+          profession_codes: professionCodes,
+          datetime: now_time,
+        };
+        localStorage.setItem('saveApi', JSON.stringify(new_saveApi));
+      }
+    } else {
+      setCitizenships(need_fetch.citizenships);
+      setProfessionCodes(need_fetch.profession_codes);
+      setFormOfEducations(need_fetch.form_of_educations);
+    }
+  }, [progress]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,10 +103,14 @@ function FormRecomendation() {
       formData.get('form_of_educationId') !== 'DEFAULT' &&
       formData.get('form_of_educationId') &&
       formData.get('profession_codeId') !== 'DEFAULT' &&
-      formData.get('profession_codeId')
+      formData.get('profession_codeId') &&
+      gender !== null &&
+      region !== null
     ) {
       const paramsToPredict = {
         ip: ip,
+        region: region,
+        gender: gender,
         qualification: formData.get('qualificationId'),
         educational_organization: formData.get('educational_organizationId'),
         form_of_education: parseInt(formData.get('form_of_educationId')),
@@ -81,6 +129,7 @@ function FormRecomendation() {
       };
 
       dispatch(setParamsToPredict({ ...paramsToPredict }));
+      dispatch(setUpdate(true));
     }
   };
 
@@ -260,9 +309,30 @@ function FormRecomendation() {
             </Col>
           </Row>
 
-          <Button variant='outline-success' type='submit'>
-            Отправить
-          </Button>
+          <Container>
+            <Row>
+              <Col sm={8}>
+                <ButtonGroup className='mb-4 mb-sm-0'>
+                  <LinkContainer to='/gender'>
+                    <Button variant='outline-primary'>Указать пол</Button>
+                  </LinkContainer>
+                  <LinkContainer to='/region'>
+                    <Button variant='outline-primary'>Указать субъект</Button>
+                  </LinkContainer>
+                </ButtonGroup>
+              </Col>
+              <Col sm={4}>
+                <Button
+                  variant='outline-success'
+                  type='submit'
+                  className='justify-content-end'
+                  disabled={region === null || gender === null}
+                >
+                  Отправить
+                </Button>
+              </Col>
+            </Row>
+          </Container>
         </Form>
       )}
     </>

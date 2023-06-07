@@ -2,9 +2,9 @@ import { ReactComponent as RussianMapSvg } from '../../assets/russian_map.svg';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { setRegion } from '../../redux/RegionSlice';
-import { setParamsToPredict } from '../../redux/ParamsToPredictSlice';
 import styles from './RussianMap.module.css';
 import { Alert, Container, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function RussianMap() {
   const dispatch = useDispatch();
@@ -44,11 +44,6 @@ function RussianMap() {
             id: id,
             iso: iso,
             name: name_region,
-          }),
-        );
-        dispatch(
-          setParamsToPredict({
-            region: id,
           }),
         );
       });
@@ -116,7 +111,9 @@ function RussianMap() {
     <div className={styles.map}>
       {visible && (
         <Container className='mb-2 mt-2'>
-          <Alert variant='secondary'>Вы выбрали субъект: {name_alert}</Alert>
+          <Alert variant='secondary'>
+            Вы выбрали субъект: {name_alert}. <Link to='/'>На главную</Link>
+          </Alert>
         </Container>
       )}
       <div className={styles.buttonGroup}>

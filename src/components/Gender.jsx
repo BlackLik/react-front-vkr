@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import { Form, ProgressBar, Button, Alert } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { setGender } from '../redux/GenderSlice';
-import { setParamsToPredict } from '../redux/ParamsToPredictSlice';
-
+import { Link } from 'react-router-dom';
 
 function Gender() {
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ function Gender() {
         setLoading(false);
       });
     }
-     
   }, []);
 
   const handleSubmit = (e) => {
@@ -37,10 +35,6 @@ function Gender() {
 
     if (vote_gender.length > 0) {
       dispatch(setGender(vote_gender[0]));
-
-      dispatch(setParamsToPredict({
-        gender: vote_gender[0].id,
-      }));
 
       setAlerGender(vote_gender[0].name_gender);
     }
@@ -62,7 +56,9 @@ function Gender() {
       ) : (
         <>
           {alerGender !== '' && (
-            <Alert variant='secondary'>Указан пол: {alerGender}</Alert>
+            <Alert variant='secondary'>
+              Указан пол: {alerGender}. <Link to='/'>На главную</Link>
+            </Alert>
           )}
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId='radion_gender' className='mb-3'>

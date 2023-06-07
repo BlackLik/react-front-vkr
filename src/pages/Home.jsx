@@ -1,7 +1,7 @@
-import { Seo, FormRecomendation } from '../components';
-import { Navigate } from 'react-router-dom';
+import { Seo, FormRecomendation, Dashboard } from '../components';
 import { useSelector } from 'react-redux';
-import { Container, Accordion } from 'react-bootstrap';
+import { Container, Accordion, Button } from 'react-bootstrap';
+import { Navigate } from 'react-router';
 
 function Home() {
   const region = useSelector((state) => state.region.data);
@@ -21,7 +21,7 @@ function Home() {
       <Seo title='Home' />
       <h1>Home</h1>
 
-      <Accordion defaultActiveKey={paramsPredict.citizenship ? '' : '0'}>
+      <Accordion defaultActiveKey={paramsPredict.ip ? '' : '0'}>
         <Accordion.Item eventKey='0'>
           <Accordion.Header>
             <h2>Фильтр</h2>
@@ -31,6 +31,10 @@ function Home() {
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
+
+      <Container fluid className='my-4'>
+        <Dashboard />
+      </Container>
     </Container>
   );
 }

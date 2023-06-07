@@ -40,6 +40,7 @@ const ParamsToPredictSlice = createSlice({
       pension_for_childs_behalf: data.pension_for_childs_behalf,
       pension_for_childs: data.pension_for_childs,
     },
+    update: false,
   },
   reducers: {
     setParamsToPredict: (state, action) => {
@@ -49,9 +50,12 @@ const ParamsToPredictSlice = createSlice({
         JSON.stringify({ ...state.data, ...action.payload }),
       );
     },
+    setUpdate: (state, action) => {
+      state.update = action.payload;
+    },
   },
 });
 
-export const { setParamsToPredict } = ParamsToPredictSlice.actions;
+export const { setParamsToPredict, setUpdate } = ParamsToPredictSlice.actions;
 
 export default ParamsToPredictSlice.reducer;
