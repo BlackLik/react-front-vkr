@@ -63,7 +63,7 @@ function Dashboard() {
           'dataPredict',
           JSON.stringify(res.main_data.message),
         );
-        setDataRecommendation((prev) => [...prev, ...res.other_data]);
+        setDataRecommendation((prev) => [...res.other_data, ...prev]);
         setLoading(false);
         dispatch(setUpdate(false));
       });
