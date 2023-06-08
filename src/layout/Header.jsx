@@ -16,7 +16,7 @@ function Header() {
       <Navbar bg='light' expand='lg'>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand>ВекторСПО.РФ</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
