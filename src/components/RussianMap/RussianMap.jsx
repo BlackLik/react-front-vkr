@@ -38,14 +38,25 @@ function RussianMap() {
           return String.fromCharCode(parseInt(grp, 16));
         });
         name_region = decodeURIComponent(name_region);
-        setNameAlert(name_region);
-        dispatch(
-          setRegion({
-            id: id,
-            iso: iso,
-            name: name_region,
-          }),
-        );
+
+        if (
+          iso === 'RU-DON' ||
+          iso === 'RU-LUG' ||
+          iso === 'RU-HER' ||
+          iso === 'RU-ZAP'
+        ) {
+          const new_region = `${name_region}. Недоступен`;
+          setNameAlert(new_region);
+        } else {
+          setNameAlert(name_region);
+          dispatch(
+            setRegion({
+              id: id,
+              iso: iso,
+              name: name_region,
+            }),
+          );
+        }
       });
     });
   }, [dispatch]);

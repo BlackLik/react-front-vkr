@@ -4,8 +4,8 @@ import { Container } from 'react-bootstrap';
 function GenderPage() {
   return (
     <Container>
-      <Seo title='Gender Page' />
-      <h1>Gender Page</h1>
+      <Seo title='Выбрать пол' />
+      <h1>Укажите пол</h1>
       <Gender />
     </Container>
   );

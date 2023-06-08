@@ -21,8 +21,8 @@ function FormRecomendation() {
   const dispatch = useDispatch();
 
   const last_form = useSelector((state) => state.paramsPredict.data);
-  const gender = useSelector((state) => state.gender.data.id);
-  const region = useSelector((state) => state.region.data.id);
+  const gender = useSelector((state) => state.gender.data);
+  const region = useSelector((state) => state.region.data);
 
   const [ip, setIp] = useState(null);
   const [citizenships, setCitizenships] = useState([]);
@@ -30,6 +30,7 @@ function FormRecomendation() {
   const [formOfEducations, setFormOfEducations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState([]);
+  const [dateBirth, setDateOfBirth] = useState(2001);
 
   const [rangeEducation, setRangeEducation] = useState(48);
   const [rangeDisability, setRangeDisability] = useState(0);
@@ -109,8 +110,8 @@ function FormRecomendation() {
     ) {
       const paramsToPredict = {
         ip: ip,
-        region: region,
-        gender: gender,
+        region: region.id,
+        gender: gender.id,
         qualification: formData.get('qualificationId'),
         educational_organization: formData.get('educational_organizationId'),
         form_of_education: parseInt(formData.get('form_of_educationId')),
@@ -171,9 +172,8 @@ function FormRecomendation() {
                 <Form.Label>Год поступления</Form.Label>
                 <Form.Control
                   type='number'
-                  min={1900}
-                  max={2100}
-                  placeholder='2017'
+                  min={dateBirth ? dateBirth + 14: 1900}
+                  placeholder={dateBirth ? dateBirth + 16: 1900}
                   required
                   name='year_of_enrollmentId'
                   defaultValue={last_form.year_of_enrollment}
@@ -190,6 +190,8 @@ function FormRecomendation() {
                   placeholder='2001'
                   required
                   name='year_of_birthId'
+                  value={dateBirth}
+                  onChange={(e) => setDateOfBirth(parseInt(e.target.value))}
                   defaultValue={last_form.year_of_birth}
                 />
               </Form.Group>
@@ -313,11 +315,11 @@ function FormRecomendation() {
             <Row>
               <Col sm={8}>
                 <ButtonGroup className='mb-4 mb-sm-0'>
-                  <LinkContainer to='/gender'>
-                    <Button variant='outline-primary'>Указать пол</Button>
-                  </LinkContainer>
                   <LinkContainer to='/region'>
-                    <Button variant='outline-primary'>Указать субъект</Button>
+                    <Button variant='outline-primary'>{region.name}</Button>
+                  </LinkContainer>
+                  <LinkContainer to='/gender'>
+                    <Button variant='outline-primary'>{gender.name_gender}</Button>
                   </LinkContainer>
                 </ButtonGroup>
               </Col>

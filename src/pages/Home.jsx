@@ -18,8 +18,8 @@ function Home() {
 
   return (
     <Container>
-      <Seo title='Home' />
-      <h1>Home</h1>
+      <Seo title='Главная страница' />
+      <h1>Главная страница</h1>
 
       <Accordion defaultActiveKey={paramsPredict.ip ? '' : '0'}>
         <Accordion.Item eventKey='0'>

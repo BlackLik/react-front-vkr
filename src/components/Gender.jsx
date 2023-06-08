@@ -62,7 +62,7 @@ function Gender() {
           )}
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId='radion_gender' className='mb-3'>
-              <Form.Label>Gender</Form.Label>
+              <Form.Label>Пол</Form.Label>
               <Form.Control
                 as='select'
                 name='radion_gender'
@@ -70,7 +70,7 @@ function Gender() {
                 required
               >
                 <option value='DEFAULT' disabled>
-                  Select Gender
+                  Выберете пол
                 </option>
                 {genders.map((item) => (
                   <option key={item.id} value={item.id}>
@@ -81,7 +81,7 @@ function Gender() {
             </Form.Group>
             <Form.Group>
               <Button variant='success' type='submit'>
-                Submit
+                Сохранить
               </Button>
             </Form.Group>
           </Form>

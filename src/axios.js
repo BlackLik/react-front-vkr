@@ -19,7 +19,7 @@ async function getApiDataWithParams(url_path, params) {
 }
 
 async function getApiAllGender() {
-  return await getApiData('/genders');
+  return await getApiData('genders');
 }
 
 async function getIp() {

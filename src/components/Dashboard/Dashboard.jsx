@@ -10,13 +10,53 @@ async function getRecomendatiom(params) {
     ...params,
   });
   let other_data = [];
-  for (let i = 0; i < 3; i++) {
+
+  const profession_code_array = JSON.parse(localStorage.getItem('saveApi'))
+    .profession_codes;
+
+  const name_main_profesion = profession_code_array.filter((item) => {
+    if (item.id === params.profession_code) {
+      return item;
+    }
+  })[0];
+
+  console.log(name_main_profesion);
+
+  let all_prof_code_with = profession_code_array.filter((item) => {
+    if (
+      item.name_profession_code.substring(0, 2) ===
+      name_main_profesion.name_profession_code.substring(0, 2)
+    ) {
+      return item;
+    }
+  });
+
+  const length_array = all_prof_code_with.length;
+
+  var counter = 0
+
+  const main_prof = all_prof_code_with.filter((item) => {
+
+    if (length_array <= 2) {
+        return item;
+    }
+
+    if (item.id === params.profession_code) {
+      return item;
+    } else {
+      if (counter < 2){
+        counter++;
+        return item;
+      }
+    }
+  });
+
+  console.log(main_prof);
+
+  for (let i = 0; i < main_prof.length; i++) {
     const new_params = {
       ...params,
-      profession_code:
-        params.profession_code > 3
-          ? params.profession_code - i
-          : params.profession_code + i,
+      profession_code: main_prof[i].id,
     };
 
     let result = await getApiDataWithParams('predict', {
@@ -56,7 +96,7 @@ function Dashboard() {
     if (data && !update_params) {
       setDataPredict(data);
       setLoading(false);
-    } else {
+    } else if (update_params) {
       getRecomendatiom(paramsPredict).then((res) => {
         setDataPredict(res.main_data.message);
         localStorage.setItem(
@@ -82,15 +122,10 @@ function Dashboard() {
     <>
       <Row>
         <Col>
-          <h1>Вероятность трудоустройства равняется {dataPredict.probability[1]}</h1>
-          {/* <p>
-            CatBoost считает, что трудоустройство из образовательной организации{' '}
-            {paramsPredict.educational_organization} для{' '}
-            {paramsPredict.gender ? 'девушек' : 'юношей'}{' '}
-            {paramsPredict.year_of_birth} года рождения по данному направлению и
-            трудоустроиться по профилю {paramsPredict.qualification}{' '}
-            {dataPredict.prediction === 0 ? 'Нельзя' : 'Возможно'}.
-          </p> */}
+          <h2>
+            Вероятность трудоустройства равняется{' '}
+            {dataPredict.probability[1].toFixed(3)}
+          </h2>
         </Col>
       </Row>
 
