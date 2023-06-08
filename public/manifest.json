@@ -1,7 +1,7 @@
 {
-  "name": "My React App",
-  "short_name": "React App",
-  "description": "My awesome React app",
+  "name": "Вектор СПО",
+  "short_name": "векторспо.рф",
+  "description": "Веб-приложение векторспо.рф",
   "icons": [
     {
       "src": "/vite.svg",

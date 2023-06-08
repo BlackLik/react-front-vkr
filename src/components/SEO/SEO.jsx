@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function Seo(props) {
   return (
     <Helmet>
-      <title>{props.title} | Vite + React</title>
+      <title>{props.title} | Вектор СПО</title>
       <meta name='title' content={'Vite and React ' + props.title} />
       <meta name='description' content={props.description} />
       <meta property='og:title' content={props.title} />
