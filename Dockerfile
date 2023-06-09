@@ -21,7 +21,7 @@ RUN npm install -g serve
 
 # Устанавливаем переменную среды для указания порта, на котором будет работать приложение
 ENV VITE_ENV=production
-ENV VITE_API_BACKEND=http://127.0.0.1:5000
+ENV VITE_API_BACKEND=http://0.0.0.0:5000
 
 # Открываем указанный порт
 EXPOSE 3000
